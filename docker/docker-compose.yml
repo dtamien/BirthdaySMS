@@ -1,0 +1,21 @@
+services:
+  birthdaysms:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: birthdaysms
+    container_name: birthdaysms
+    env_file:
+      - ${ENV_FILE:-../configs/credentials.env}
+    command: >
+      /bin/sh -c "
+      echo '0 0 * * * /usr/local/bin/python /app/src/main.py >> /var/log/birthdaysms.log 2>&1' > /etc/cron.d/birthdaysms &&
+      chmod 0644 /etc/cron.d/birthdaysms &&
+      crontab /etc/cron.d/birthdaysms &&
+      cron &&
+      touch /var/log/birthdaysms.log &&
+      echo 'BirthdaySMS will run now, and every day at midnight' &&
+      /usr/local/bin/python /app/src/main.py >> /var/log/birthdaysms.log 2>&1 &&
+      tail -f /var/log/birthdaysms.log
+      "
+    restart: unless-stopped
