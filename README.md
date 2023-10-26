@@ -20,6 +20,6 @@ BirthdaySMS is designed to run periodically to check for birthdays and send remi
 ```bash
 (echo "0 */1 * * * cd /path/to/BirthdaySMS/ && /usr/bin/python3 main.py") | crontab -
 ```
-This will run the BirthdaySMS script every hour. Make sure to replace `/path/to/BirthdaySMS` with the actual path to your BirthdaySMS directory.
+This will run the BirthdaySMS script every hour. Make sure to replace `/path/to/BirthdaySMS` with the actual path of BirthdaySMS directory.
 
-Now you're all set to receive reminders on the dates you configure in `birthdays.json`!
+Now you're all set to receive reminders on the dates you can configure in `birthdays.json`!
