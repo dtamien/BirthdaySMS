@@ -3,17 +3,20 @@ from datetime import datetime
 from twilio.rest import Client
 import json
 
-DATEFORMAT = "%d-%m"
-
+# if not specified, date is today's
 if args.date:
     date = args.date
 else:
-    date = format(datetime.now(), DATEFORMAT)
+    date = format(datetime.now(), "%d-%m")
 
-with open(config['DATE_FILE'], 'r+') as stream:
+# checks if the program has ran on date
+# if not: seeks for people born on date
+# if people and sms are enabled: sends one
+# if ran: rewrites currentDate.txt
+with open("currentDate.txt", 'r+') as stream:
     if (stream.read() != date) or args.date:
         logger.info(f"Seeking for birthdays.")
-        with open(config['BIRTHDAYS_FILE'], 'r') as stream2:
+        with open("birthdays.json", 'r') as stream2:
             try:
                 people = json.load(stream2)[date]
             except:
@@ -26,17 +29,17 @@ with open(config['DATE_FILE'], 'r+') as stream:
                     logger.info(f"An SMS is on its way.")
                     client = Client(config['ACCOUNT_SID'], config['AUTH_TOKEN'])
                     client.messages.create(
-                        from_ = config['MY_TWILIO_NUMBER'],
+                        from_ = config['TWILIO_NUMBER'],
                         body = msg,
-                        to = config['MY_PERSONAL_NUMBER']
+                        to = config['PERSONAL_NUMBER']
                     )
                 else:
                     logger.info(f"Confer to config.yaml to enable SMS.")
             else:
-                logger.info(f"It seems you don't know anyone who was born on the {date}.")
+                logger.info(f"It seems like you don't know anyone who was born on the {date}.")
         stream.seek(0)
         stream.truncate()
         stream.write(date)
-        logger.info(f"{config['DATE_FILE']} has been updated.")
+        logger.info(f"currentDate.txt has been updated.")
     else:
-        logger.info(f"The process has already been run today.")
+        logger.info(f"BirthdaySMS has already been ran today.")

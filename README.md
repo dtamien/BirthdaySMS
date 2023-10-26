@@ -1,9 +1,11 @@
-# birthdaysms
-After some easy configuration, you'll freely receive SMS on the birthdays you configured. Those are frendly reminders to wish them to the people you love!
+# BirthdaySMS, in a nutshell
+After updating `config.py` with your credentials and setting up a *cronjob* on `main.py`, you'll receive SMS for free on the birthdays you configured. Those are reminders to wish them to the people you love!
 
-# steps
+# -Clone the repository
+teuteu
 
-```
-git clone git@github.com:dtamien/birthdaysms.git
-docker build . -t birthdaysms
-```
+# Configure your own credentials
+toto
+
+# Set up a cronjob
+tata
