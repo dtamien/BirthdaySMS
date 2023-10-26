@@ -1,11 +1,25 @@
-# BirthdaySMS, in a nutshell
-After updating `config.py` with your credentials and setting up a *cronjob* on `main.py`, you'll receive SMS for free on the birthdays you configured. Those are reminders to wish them to the people you love!
+## Getting started
 
-# -Clone the repository
-teuteu
+Follow these steps to set up BirthdaySMS and start receiving birthday reminders.
 
-# Configure your own credentials
-toto
+## Step 1: Clone the repository
 
-# Set up a cronjob
-tata
+```bash
+git clone git@github.com:dtamien/BirthdaySMS.git
+```
+
+## Step 2: Configure your credentials
+
+Sign up for a free Twilio account at https://www.twilio.com/try-twilio.
+
+Update the `config.py` file with your Twilio account information, including your <ins>Account SID</ins>, <ins>Auth Token</ins>, and <ins>Twilio phone number</ins>.
+
+## Step 3: Set up a cronjob
+BirthdaySMS is designed to run periodically to check for birthdays and send reminders. You can achieve this by setting up a cron job.
+
+```bash
+(echo "0 */1 * * * cd /path/to/BirthdaySMS/ && /usr/bin/python3 main.py") | crontab -
+```
+This will run the BirthdaySMS script every hour. Make sure to replace `/path/to/BirthdaySMS` with the actual path to your BirthdaySMS directory.
+
+Now you're all set to receive reminders on the dates you configure in `birthdays.json`!
